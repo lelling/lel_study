@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.mapper.MyInterface">
+
+	<cache/>
+	
+	<select id="list" resultType="test" useCache="true">
+	 select stu_id as id, 
+	 	stu_name as name
+	 from student t
+	</select>
+	
+	<update id="update">
+	update student
+	set update_date = now()
+	<where>
+	  <if test="test != null">
+		<if test="test.id != null"> stu_id = #{test.id}</if>
+		<if test="test.name != null and test.name != '' "> and stu_name = #{test.name}</if>
+	  </if>
+	</where>
+	</update>
+	
+	<resultMap type="goods" id="goodsRes">
+		<id property="id" column="goodsid"/>
+		<result property="detail" column="detail"/>
+		<result property="goodsname" column="goodsname"/>
+	</resultMap>
+	<resultMap type="orderItem" id="orderItemRes">
+		<id property="id" column="itemid"/>
+		<result property="orderid" column="orderid"/>
+		<result property="goodsid" column="goodsid"/>
+		<result property="num" column="num"/>
+		<association property="goods" resultMap="goodsRes"/>
+	</resultMap>
+	<resultMap type="orders" id="ordersRes">
+		<id property="id" column="id"/>
+		<result property="buyerid" column="buyerid"/>
+		<result property="createdate" column="createdate"/>
+		<result property="remark" column="remark"/>
+		<collection property="orderitems" resultMap="orderItemRes" />
+	</resultMap>
+	
+	<select id="qryOrderById" resultMap="ordersRes">
+	select t.id, t.createdate,t.remark,t.buyerid, 
+		i.id as itemid, i.goodsid, i.num, i.orderid, 
+		g.goodsname,g.detail
+	from t_orders t
+		left join t_orders_item i on t.id = i.orderid
+		left join t_goods g on i.goodsid = g.id
+	where t.id = #{id}
+	</select>
+	
+	<select id="qryOrderForList" resultMap="ordersRes">
+	select t.id, t.createdate,t.remark,t.buyerid, 
+		i.id as itemid, i.goodsid, i.num, i.orderid, 
+		g.goodsname,g.detail
+	from t_orders t
+		left join t_orders_item i on t.id = i.orderid
+		left join t_goods g on i.goodsid = g.id
+	<where>
+		<if test="null != id">t.id = #{id}</if>
+	</where>
+	</select>
+</mapper>
