@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import com.mybatis.mapper.MyInterface;
 import com.mybatis.model.Orders;
+import com.mybatis.utils.SqlHelper;
 
 public class MySqlSession {
 	
@@ -40,6 +41,8 @@ public class MySqlSession {
 		 * 1-单条查询，做后置合并行
 		 */
 		Orders order = mapper.qryOrderById(1);
+		String sql = SqlHelper.getMapperSql(sqlSession, MyInterface.class, "qryOrderById", new Object[]{2});
+		System.out.println(sql);
 		System.out.println(new Gson().toJson(order));
 		
 		/**
