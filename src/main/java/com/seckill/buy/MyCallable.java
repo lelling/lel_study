@@ -53,7 +53,7 @@ public class MyCallable implements Callable<SecKillOrder>{
 			        /* 抢购失败业务逻辑 */
 			        //jedis.set(failuserifo, failinfo);
 			    } else {
-			        for(Object succ : list){
+//			        for(Object succ : list){
 			             String succinfo = buy + " 抢购成功, 已抢购" + (num - (valint-100)) + "- 本次抢购：" + num;
 			             System.out.println(succinfo);
 			             secKillOrder = new SecKillOrder();
@@ -62,7 +62,7 @@ public class MyCallable implements Callable<SecKillOrder>{
 			     		 secKillOrder.setUserid(userid);
 			             /* 抢购成功业务逻辑 */
 			             jedis.set(buy, String.valueOf(num));
-			        }
+//			        }
 			    }
 
 			} else {

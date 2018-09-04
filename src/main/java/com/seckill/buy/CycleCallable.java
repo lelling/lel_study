@@ -15,6 +15,11 @@ import com.seckill.model.SecKillOrder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
+/**
+ * 此处仅模拟单redis单应用服务场景<br>
+ * @author lel
+ *
+ */
 public class CycleCallable implements Callable<Result<SecKillOrder>>{
 	
 	private Logger logger = LoggerFactory.getLogger(CycleCallable.class);
@@ -76,7 +81,7 @@ public class CycleCallable implements Callable<Result<SecKillOrder>>{
 				        /* 抢购失败业务逻辑 */
 				        //jedis.set(failuserifo, failinfo);
 				    } else {
-				        for(Object succ : list){
+//				        for(Object succ : list){
 				             String succinfo = buy + " 抢购成功, 已抢购" + (num - (valint-100)) + "- 本次抢购：" + num;
 				             System.out.println(succinfo);
 				             /* 抢购成功业务逻辑 */
@@ -84,7 +89,7 @@ public class CycleCallable implements Callable<Result<SecKillOrder>>{
 				             secKillOrder.setOrderTime(new Date());
 				             result.success("抢购成功");
 				             logger.debug(succinfo);
-				        }
+//				        }
 				        break;
 				    }
 

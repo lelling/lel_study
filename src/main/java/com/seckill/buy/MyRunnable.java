@@ -2,6 +2,7 @@ package com.seckill.buy;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import redis.clients.jedis.Jedis;
@@ -37,21 +38,21 @@ public class MyRunnable implements Runnable {
             	Transaction tx = jedis.multi();// 开启事务
                 tx.incrBy(watchkeys, -1);
                 List<Object> list = tx.exec();// 提交事务，如果此时watchkeys被改动了，则返回null
-                if (list == null || list.size()==0) {
+                if (CollectionUtils.isEmpty(list)) {
                     String failuserifo = watchkeys+userinfo;
                     String failinfo="用户：" + failuserifo + "商品争抢失败，抢购失败";
                     System.out.println(failinfo);
                     /* 抢购失败业务逻辑 */
                     //jedis.set(failuserifo, failinfo);
                 } else {
-                    for(Object succ : list){
+//                    for(Object succ : list){
                          String succuserifo = watchkeys+userinfo ;
                          String succinfo="用户：" + succuserifo + "抢购成功，当前抢购成功人数:"
                                  + (1-(valint-100));
                          System.out.println(succinfo);
                          /* 抢购成功业务逻辑 */
                          jedis.set(succuserifo, succinfo);
-                    }
+//                    }
                 }
  
             } else {
