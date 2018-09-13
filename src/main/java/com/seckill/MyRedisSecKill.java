@@ -20,6 +20,11 @@ import com.seckill.model.SecKillOrder;
 
 import redis.clients.jedis.Jedis;
 
+/**
+ * 
+ * @author lel
+ *
+ */
 public class MyRedisSecKill {
 	private Logger logger = LoggerFactory.getLogger(MyRedisSecKill.class);
 	
