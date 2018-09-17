@@ -36,7 +36,10 @@ public class MySqlSession {
 	public static void main(String... args) throws Exception{
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		MyInterface mapper = sqlSession.getMapper(MyInterface.class);
-
+		
+		Orders orderOne = sqlSession.selectOne("com.mybatis.mapper.MyInterface.qryOrderById", 1);
+		System.out.println(new Gson().toJson(orderOne));
+		
 		/**
 		 * 1-单条查询，做后置合并行
 		 */
@@ -53,6 +56,7 @@ public class MySqlSession {
 		List<Orders> orders = mapper.qryOrderForList(null);
 		int total = (int) page.getTotal();
 		System.out.println( orders.size() + ", " + page.getTotal() + "---"+ new Gson().toJson(orders));
+		
 		
 		
 		sqlSession.close();

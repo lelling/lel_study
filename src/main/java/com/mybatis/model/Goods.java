@@ -2,6 +2,9 @@ package com.mybatis.model;
 
 import java.io.Serializable;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("goods")
 public class Goods implements Serializable{
 	/**
 	 * 
