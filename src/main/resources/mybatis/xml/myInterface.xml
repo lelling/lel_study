@@ -41,10 +41,23 @@
 		<collection property="orderitems" resultMap="orderItemRes" />
 	</resultMap>
 	
+	<!-- 此处多个表中存在同名id字段，当子表为空时存在子表id被赋值的问题  -->
 	<select id="qryOrderById" resultMap="ordersRes">
-	select t.id, t.createdate,t.remark,t.buyerid, 
+	select 
+	/* 
+		t.id, t.createdate, 
+		IFNULL(t.remark, '') remark, 
+		IFNULL(t.buyerid,'') buyerid, 
+		IFNULL(i.id, -1) itemid, 
+		IFNULL(i.goodsid, -1) goodsid, 
+		i.num, 
+		i.orderid, 
+		IFNULL(g.goodsname, '') goodsname,
+		IFNULL(g.detail, '') detail
+	*/	
+		t.id, t.createdate, t.remark, t.buyerid, 
 		i.id as itemid, i.goodsid, i.num, i.orderid, 
-		g.goodsname,g.detail
+		g.goodsname,g.detail 
 	from t_orders t
 		left join t_orders_item i on t.id = i.orderid
 		left join t_goods g on i.goodsid = g.id
