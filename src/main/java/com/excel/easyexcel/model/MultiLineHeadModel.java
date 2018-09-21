@@ -1,12 +1,18 @@
 package com.excel.easyexcel.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 
-public class MultiLineHeadModel extends BaseRowModel{
+public class MultiLineHeadModel extends BaseRowModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3658555700957092003L;
+
 	@ExcelProperty(value = {"基本信息","人员信息", "编号"}, index = 0)
 	private Integer id;
 	
@@ -19,8 +25,13 @@ public class MultiLineHeadModel extends BaseRowModel{
 	@ExcelProperty(value = {"基本信息","创建日期","创建日期"}, index = 3, format = "yyyy-MM-dd")
 	private Date createDate;
 	
-	@ExcelProperty(value = {"月额","月额","月额"}, index = 4)
+	@ExcelProperty(value = {"月额","月额","月额t"}, index = 4)
 	private BigDecimal inPerMonth;
+
+	@ExcelProperty(value = {"月额","月额","小"}, index = 5)
+	private String a_ss;
+	
+	private String remark;
 
 	public Integer getId() {
 		return id;
@@ -28,6 +39,14 @@ public class MultiLineHeadModel extends BaseRowModel{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getA_ss() {
+		return a_ss;
+	}
+
+	public void setA_ss(String a_ss) {
+		this.a_ss = a_ss;
 	}
 
 	public String getName() {
@@ -60,6 +79,14 @@ public class MultiLineHeadModel extends BaseRowModel{
 
 	public void setInPerMonth(BigDecimal inPerMonth) {
 		this.inPerMonth = inPerMonth;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 }

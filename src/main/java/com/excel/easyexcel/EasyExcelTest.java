@@ -29,11 +29,11 @@ public class EasyExcelTest {
 //		noModelMultipleSheet();
 		
 //		writeSimpleModel();
-//		writeMultiLineHeadModel();
+		writeMultiLineHeadModel();
 		
 //		readSimpleModelFromSheet();
 		
-		readMultiLineHeadModelFromSheet();
+//		readMultiLineHeadModelFromSheet();
 		
 	}
 	
@@ -159,10 +159,11 @@ public class EasyExcelTest {
 		for (int i = 0; i < 100; i++) {
 			MultiLineHeadModel dbModel = new MultiLineHeadModel();
 			dbModel.setId(i);
-			dbModel.setName("n"+i);
+			dbModel.setName(i== 99? null:"n"+i);
 			dbModel.setSize(i+3);
 			dbModel.setInPerMonth(new BigDecimal(i+4));
 			dbModel.setCreateDate(new Date(2018-1900, 9, i));
+			dbModel.setRemark("备注");
 			data.add(dbModel);
 		}
 		
