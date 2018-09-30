@@ -14,6 +14,7 @@ import java.util.List;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.metadata.Table;
 import com.alibaba.excel.read.context.AnalysisContext;
 import com.alibaba.excel.read.event.AnalysisEventListener;
 import com.alibaba.excel.support.ExcelTypeEnum;
@@ -21,6 +22,11 @@ import com.excel.easyexcel.model.MultiLineHeadModel;
 import com.excel.easyexcel.model.SimpleModel;
 import com.lel.utils.json.GsonUtils;
 
+/**
+ * easyExcel读写excel<br>
+ * @author lel
+ *
+ */
 public class EasyExcelTest {
 
 	public static void main(String[]args) throws Exception{
@@ -29,7 +35,8 @@ public class EasyExcelTest {
 //		noModelMultipleSheet();
 		
 //		writeSimpleModel();
-		writeMultiLineHeadModel();
+//		writeMultiLineHeadModel();
+		writeTwoData();
 		
 //		readSimpleModelFromSheet();
 		
@@ -223,5 +230,48 @@ public class EasyExcelTest {
 		writer.write0(null, sheet2);
 		
 		writer.finish();
+	}
+	
+	/**
+	 * 多个表 数据生成一个sheet数据
+	 * @throws Exception
+	 */
+	public static void writeTwoData() throws Exception {
+		OutputStream out = new FileOutputStream("D://writeTwoData.xlsx");
+		ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
+		Sheet sheet1 = new Sheet(1, 0);
+		sheet1.setSheetName("示例");
+		
+		Table t1 = new Table(1);
+		t1.setClazz(MultiLineHeadModel.class);
+		List<MultiLineHeadModel> data = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			MultiLineHeadModel dbModel = new MultiLineHeadModel();
+			dbModel.setId(i);
+			dbModel.setName(i== 99? null:"n"+i);
+			dbModel.setSize(i+3);
+			dbModel.setInPerMonth(new BigDecimal(i+4));
+			dbModel.setCreateDate(new Date(2018-1900, 9, i));
+			dbModel.setRemark("备注");
+			data.add(dbModel);
+		}
+		writer.write(data, sheet1, t1);
+		
+		Table t2 = new Table(2);
+		t2.setClazz(SimpleModel.class);
+		List<SimpleModel> data2 = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			SimpleModel dbModel = new SimpleModel();
+			dbModel.setId(i);
+			dbModel.setName("n"+i);
+			dbModel.setSize(i+3);
+			dbModel.setInPerMonth(new BigDecimal(i+4));
+			dbModel.setCreateDate(new Date(2018-1900, 9, i));
+			data2.add(dbModel);
+		}
+		writer.write(data2, sheet1, t2);
+		
+		writer.finish();
+		
 	}
 }
