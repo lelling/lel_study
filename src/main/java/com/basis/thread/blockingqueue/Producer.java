@@ -10,6 +10,9 @@ public class Producer implements Runnable{
 	
 	private volatile boolean isRunning = true;
 	
+	/**
+	 * 生产者编号
+	 */
 	private int no;
 	
 	private BlockingQueue<Product> queue;
@@ -33,9 +36,9 @@ public class Producer implements Runnable{
 
 				product = new Product(count.incrementAndGet());
 				if (!queue.offer(product)) {
-					System.err.println(no + "生产失败：" + product.getId());
+					System.err.println("[P" + no + "] 生产失败：" + product.getId());
 				} else {
-					System.out.println(no + "生产成功：" + product.getId());
+					System.out.println("[P" +no + "]生产成功：" + product.getId());
 				}
 			}
 		} catch (InterruptedException e) {

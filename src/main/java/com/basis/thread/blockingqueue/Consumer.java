@@ -2,12 +2,19 @@ package com.basis.thread.blockingqueue;
 
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import com.basis.thread.Product;
 
 public class Consumer implements Runnable{
+	/**
+	 * 生产者编号
+	 */
 	private int no;
+	
 	private BlockingQueue<Product> queue;
+	
+	private volatile boolean isRunning = true;
 	
 	private static final int SLEEPTIME = 1000;
 	
@@ -21,10 +28,10 @@ public class Consumer implements Runnable{
 		Random random = new Random();
 		
 		try {
-			while(true){
-				Product product = queue.take();
+			while(isRunning){
+				Product product = queue.poll(3, TimeUnit.SECONDS);
 				if (null != product) {
-					System.out.println(no + "消费：" + product.getId());
+					System.out.println("【C" + no + "】 => 消费：" + product.getId());
 					Thread.sleep(random.nextInt(SLEEPTIME));
 				}
 			}
@@ -41,4 +48,7 @@ public class Consumer implements Runnable{
 		this.no = no;
 	}
 	
+	public void stop(){
+		isRunning = false;
+	}
 }

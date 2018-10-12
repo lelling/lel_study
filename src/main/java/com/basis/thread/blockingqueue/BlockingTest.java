@@ -9,8 +9,9 @@ import com.basis.thread.Product;
 
 public class BlockingTest {
 	
+	public static final BlockingQueue<Product> queue = new LinkedBlockingDeque<>(10);
+	
 	public static void main(String[] args) throws Exception{
-		BlockingQueue<Product> queue = new LinkedBlockingDeque<>(10);
         Producer p1 = new Producer(1, queue);
         Producer p2 = new Producer(2, queue);
         Producer p3 = new Producer(3, queue);
@@ -24,11 +25,16 @@ public class BlockingTest {
         service.execute(c1);
         service.execute(c2);
         service.execute(c3);
-//        Thread.sleep(10*1000);
-//        p1.stop();
-//        p2.stop();
-//        p3.stop();
-//        Thread.sleep(3000);
-//        service.shutdown();
+        Thread.sleep(5 * 1000);
+        p1.stop();
+        p2.stop();
+        p3.stop();
+        Thread.sleep(3000);
+        
+        service.shutdown();
+        
+        c1.stop();
+        c2.stop();
+        c3.stop();
 	}
 }
