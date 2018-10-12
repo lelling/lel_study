@@ -1,5 +1,8 @@
 package com.basis.bit;
 
+/**
+ * 计算n的二进制位中1的个数
+ */
 public class CountBitOne {
 	
 	public static void show(int n, int count){
