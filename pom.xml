@@ -92,7 +92,18 @@
 			<artifactId>easyexcel</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		
+
+		<dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-core</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.10</version>
+		</dependency>
 	</dependencies>
 
 
